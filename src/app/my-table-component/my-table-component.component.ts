@@ -22,7 +22,7 @@ export class MyTableComponentComponent implements OnInit {
     let isDragging = false;
     let mouseDown = false;
 
-    $('#myTable').on('mousedown', 'tbody tr', function () {
+    $('#myTable').on('mousedown', 'tbody tr', function (this: HTMLElement) {
       mouseDown = true;
       if ($(this).hasClass('selectable') && !$(this).attr('data-processed')) {
         toggleRowSelect($(this));
@@ -30,7 +30,7 @@ export class MyTableComponentComponent implements OnInit {
       }
     });
 
-    $('#myTable').on('mousemove', 'tbody tr', function () {
+    $('#myTable').on('mousemove', 'tbody tr', function (this: HTMLElement) {
       if (mouseDown && !isDragging) {
         isDragging = true;
       }
@@ -40,7 +40,7 @@ export class MyTableComponentComponent implements OnInit {
       }
     });
 
-    $('body').on('mouseup', function () {
+    $('body').on('mouseup', function (this: HTMLElement) {
       isDragging = false;
       mouseDown = false;
       $('tr[data-processed="true"]').removeAttr('data-processed');
