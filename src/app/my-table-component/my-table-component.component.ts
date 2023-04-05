@@ -17,15 +17,45 @@ export class MyTableComponentComponent implements OnInit {
       pagingType: 'full_numbers',
       lengthMenu: [6, 3],
       processing: true
-    };
-    $('#myTable').on('click', 'tbody tr', function() {
-      if ($(this).hasClass('selectable')) {
-       if ($(this).hasClass('row-select')) {
-          $(this).closest('tr').removeClass("row-select");
+    }
+    $(function () {
+    let isDragging = false;
+    let mouseDown = false;
+
+    $('#myTable').on('mousedown', 'tbody tr', function () {
+      mouseDown = true;
+      if ($(this).hasClass('selectable') && !$(this).attr('data-processed')) {
+        toggleRowSelect($(this));
+        $(this).attr('data-processed', 'true');
+      }
+    });
+
+    $('#myTable').on('mousemove', 'tbody tr', function () {
+      if (mouseDown && !isDragging) {
+        isDragging = true;
+      }
+      if (isDragging && $(this).hasClass('selectable') && !$(this).attr('data-processed')) {
+        toggleRowSelect($(this));
+        $(this).attr('data-processed', 'true');
+      }
+    });
+
+    $('body').on('mouseup', function () {
+      isDragging = false;
+      mouseDown = false;
+      $('tr[data-processed="true"]').removeAttr('data-processed');
+    });
+
+    function toggleRowSelect(row: any) {
+      if (row.hasClass('row-select')) {
+        row.removeClass('row-select');
       } else {
-        $(this).closest('tr').addClass('row-select');
+        row.addClass('row-select');
       }
     }
-  });
+});
+
+
+
   }
 }

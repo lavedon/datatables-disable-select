@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import { mockData } from '../mock-data';
@@ -17,7 +16,9 @@ export class MySelectExtensionComponent implements OnInit {
       pagingType: 'full_numbers',
       lengthMenu: [6, 3],
       processing: true,
-      select: true
+      select: {
+        style: 'os'
+      }
     };
   }
 }
