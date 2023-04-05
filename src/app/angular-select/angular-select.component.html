@@ -1,0 +1,23 @@
+<h1>Angular ONLY - No JQuery - No Change Needed to Change Existing Install</h1>
+<table id="angularSelectTable" class="table table-container" datatable [dtOptions]="dt3rdOptions">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Job</th>
+            <th>Employed</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let person of mockData; let i = index" 
+        (mousedown)="onMouseDown(i)"
+        (mousemove)="onMouseMove(i)"
+        (mouseup)="onMouseUp(i)" 
+        [ngClass]="{'selectable': person.isSelectable, 'selected': isSelected(i)}">
+            <td>{{person.name}}</td>
+            <td>{{person.age}}</td>
+            <td>{{person.job}}</td>
+            <td>{{person.employed}}</td>
+        </tr>
+    </tbody>
+</table>

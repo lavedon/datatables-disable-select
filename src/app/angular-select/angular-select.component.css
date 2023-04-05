@@ -1,0 +1,7 @@
+.selectable {
+    background-color: orange;
+}
+
+.selected {
+    background-color: hotpink;
+}
