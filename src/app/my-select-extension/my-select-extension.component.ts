@@ -1,3 +1,4 @@
+import 'datatables.net'
 import { ViewChild, Component, OnInit, AfterViewInit } from '@angular/core';
 import { mockData } from '../mock-data';
 import { DataTableDirective } from 'angular-datatables';
