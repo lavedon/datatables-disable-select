@@ -10,15 +10,14 @@ import { mockData } from '../mock-data';
 export class MySelectExtensionComponent implements OnInit {
 
   mockData = mockData;
-  dtOptions: any = {};
+  dt2ndOptions: any = {};
+
   ngOnInit(): void {
-    this.dtOptions = {
+    this.dt2ndOptions = {
       pagingType: 'full_numbers',
-      lengthMenu: [6, 3],
+      lengthMenu: [5, 3],
       processing: true,
-      select: {
-        style: 'os'
-      }
+      select: true
     };
   }
 }
