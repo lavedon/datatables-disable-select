@@ -24,7 +24,12 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "paths": {
+      "datatables.net": [
+        "node_modules/datatables.net/js/jquery.dataTables.js"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
