@@ -5,10 +5,3 @@
 .row-select { 
     background-color: red;
 }
-
-table { 
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-}

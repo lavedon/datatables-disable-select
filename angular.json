@@ -35,7 +35,6 @@
               "node_modules/datatables.net/js/jquery.dataTables.js",
               "node_modules/bootstrap/dist/js/bootstrap.js",
               "node_modules/datatables.net-select/js/dataTables.select.js"
-              
             ]
           },
           "configurations": {
