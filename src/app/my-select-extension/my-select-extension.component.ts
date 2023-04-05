@@ -1,5 +1,4 @@
 import { ViewChild, Component, OnInit, AfterViewInit } from '@angular/core';
-import * as $ from 'jquery';
 import { mockData } from '../mock-data';
 import { DataTableDirective } from 'angular-datatables';
 

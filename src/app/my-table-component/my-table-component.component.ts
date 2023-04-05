@@ -53,9 +53,7 @@ export class MyTableComponentComponent implements OnInit {
         row.addClass('row-select');
       }
     }
-});
-
-
+  });
 
   }
 }
