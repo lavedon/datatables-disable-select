@@ -1,0 +1,19 @@
+<h1>Without Select Extension - Pure JQuery</h1>
+<table id="myTable" class="table table-container" datatable [dtOptions]="dtOptions">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Job</th>
+            <th>Employed</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let person of mockData" [ngClass]="{'selectable': person.isSelectable}">
+            <td>{{person.name}}</td>
+            <td>{{person.age}}</td>
+            <td>{{person.job}}</td>
+            <td>{{person.employed}}</td>
+        </tr>
+    </tbody>
+</table>
