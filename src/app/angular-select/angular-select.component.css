@@ -5,3 +5,10 @@
 .selected {
     background-color: hotpink;
 }
+
+textarea {
+    width: 400px;
+    height: 200px;
+    resize: none;
+    overflow: auto;
+}

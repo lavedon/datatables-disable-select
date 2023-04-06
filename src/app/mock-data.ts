@@ -1,4 +1,6 @@
-export const mockData = [
+import { IMockData } from '../app/models/i-mock-data'
+
+export const mockData : IMockData[] = [
       {name: 'John', age: 30, job: 'Developer', employed: true, isSelectable: true},
       {name: 'Jill', age: 26, job: 'Designer', employed: true, isSelectable: true},
       {name: 'Elmer', age: 94, job: 'Retired', employed: false, isSelectable: false},
