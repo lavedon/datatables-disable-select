@@ -16,6 +16,7 @@ export class AngularSelectComponent implements OnInit {
   toggledRows: Set<number> = new Set();
   tableOffset = { x: 0, y: 0};
   mousedownTimeout!: ReturnType<typeof setTimeout>;
+  selectDeselect: 'select' | 'deselect' = 'select';
 
   get selectedRowsText(): string {
     return Array.from(this.selectedRows)
@@ -95,6 +96,7 @@ export class AngularSelectComponent implements OnInit {
       console.assert(index >= 0 && index < this.mockData.length, 'index out of range');
       this.isMouseDown = true;
       this.toggledRows.clear();
+      this.setSelectDeselectMode(index);
       this.toggleRowSelection(index);
     }
 
@@ -114,16 +116,17 @@ export class AngularSelectComponent implements OnInit {
         return;
       }
       const selectedRow = this.mockData[index];
-      if (this.selectedRows.has(selectedRow)) {
-        this.selectedRows.delete(selectedRow);
-      } else {
-        this.selectedRows.add(selectedRow);
-        console.log('added a selected row');
-        console.table(this.selectedRows);
-      }
+      if (this.selectDeselect === 'deselect' && this.selectedRows.has(selectedRow)) {
+      this.selectedRows.delete(selectedRow);
+      } else if (this.selectDeselect === 'select' && !this.selectedRows.has(selectedRow)) {
+      this.selectedRows.add(selectedRow);
+      console.log('added a selected row');
+      console.table(this.selectedRows);
+    }
       this.toggledRows.add(index);
       this.lastSelectedIndex = index;
     }
+
 
     isSelected(index: number): boolean {
       return this.selectedRows.has(this.mockData[index]);
@@ -150,4 +153,10 @@ export class AngularSelectComponent implements OnInit {
       const tableRect = tableElement.getBoundingClientRect();
       this.tableOffset = { x: tableRect.left, y: tableRect.top };
     }
+
+    setSelectDeselectMode(index: number): void {
+    if (this.mockData[index].isSelectable) {
+      this.selectDeselect = this.selectedRows.has(this.mockData[index]) ? 'deselect' : 'select';
+    }
+  }
 }
