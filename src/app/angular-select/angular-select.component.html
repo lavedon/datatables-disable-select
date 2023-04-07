@@ -13,7 +13,9 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let person of mockData; let i = index" 
+        <!-- attr.data-row-index needed to prevent drawing a select box if drag starts
+            on a row that is not selectable -->
+        <tr *ngFor="let person of mockData; let i = index" [attr.data-row-index]="i"
         (mousedown)="onMouseDown(i, $event);"
         (mousemove)="onMouseMove(i);"
         (mouseup)="onMouseUp(i);" 

@@ -40,6 +40,23 @@ export class AngularSelectComponent implements OnInit {
     if ((event.target as HTMLElement).classList.contains('mat-icon')) {
       return;
     }
+
+    // Make sure the user did not try to start a drag on a nonSelectable row
+    // Step 1: Find the row element
+    let rowElement: HTMLElement | null = event.target as HTMLElement;
+    while (rowElement && !rowElement.hasAttribute('data-row-index')) {
+      rowElement = rowElement.parentElement;
+    }
+
+    // Check if the row has canSelect set to false
+    // If not, we can start drawing the select box.
+    if (rowElement) {
+      const rowIndex = parseInt(rowElement.getAttribute('data-row-index') || '', 10);
+      if (rowIndex >= 0 && rowIndex < this.mockData.length && !this.mockData[rowIndex].isSelectable) {
+        return;
+      }
+    }
+
     this.startX = event.clientX - this.tableOffset.x;
     this.startY = event.clientY - this.tableOffset.y;
     this.mousedownTimeout = setTimeout(() => {
@@ -94,6 +111,11 @@ export class AngularSelectComponent implements OnInit {
 
       console.log('onMouseDown');
       console.assert(index >= 0 && index < this.mockData.length, 'index out of range');
+
+      if (!this.mockData[index].isSelectable) {
+        return;
+      }
+
       this.isMouseDown = true;
       this.toggledRows.clear();
       this.setSelectDeselectMode(index);
