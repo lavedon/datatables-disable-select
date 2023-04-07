@@ -1,5 +1,5 @@
 import 'datatables.net'
-import { ViewChild, Component, OnInit, AfterViewInit } from '@angular/core';
+import { ElementRef, ViewChild, Component, OnInit, HostListener, AfterViewInit } from '@angular/core';
 import { mockData } from '../mock-data';
 import { DataTableDirective } from 'angular-datatables';
 import { IMockData } from '../models/i-mock-data';
@@ -10,10 +10,12 @@ import { IMockData } from '../models/i-mock-data';
   styleUrls: ['./angular-select.component.css']
 })
 export class AngularSelectComponent implements OnInit {
-  @ViewChild(DataTableDirective, { static: false })
-  datatableElement: DataTableDirective = {} as DataTableDirective;
+  @ViewChild('myDataTable', { static: false })
+  datatableElement: ElementRef = {} as ElementRef;
   selectedRows: Set<IMockData> = new Set();
   toggledRows: Set<number> = new Set();
+  tableOffset = { x: 0, y: 0};
+  mousedownTimeout!: ReturnType<typeof setTimeout>;
 
   get selectedRowsText(): string {
     return Array.from(this.selectedRows)
@@ -26,6 +28,56 @@ export class AngularSelectComponent implements OnInit {
   mockData = mockData;
   dt3rdOptions: any = {};
 
+  /* Needed for RTS style select box */
+  selectBoxStyle: any = {};
+  startX!: number;
+  startY!: number;
+
+  @HostListener('mousedown', ['$event'])
+  onGlobalMouseDown(event: MouseEvent): void {
+    clearTimeout(this.mousedownTimeout);
+    if ((event.target as HTMLElement).classList.contains('mat-icon')) {
+      return;
+    }
+    this.startX = event.clientX - this.tableOffset.x;
+    this.startY = event.clientY - this.tableOffset.y;
+    this.mousedownTimeout = setTimeout(() => {
+      this.isMouseDown = true;
+
+      this.selectBoxStyle = {
+        left: `${this.startX}px`,
+        top: `${this.startY}px`,
+        width: '0px',
+        height: '0px',
+        display: 'block'
+      };
+    },200);
+  }
+
+  @HostListener('mousemove', ['$event'])
+  onGlobalMouseMove(event: MouseEvent): void {
+    if (!this.isMouseDown) return;
+
+    const currentX = event.clientX - this.tableOffset.x;
+    const currentY = event.clientY - this.tableOffset.y;
+
+    this.selectBoxStyle = {
+      left: `${Math.min(currentX, this.startX)}px`,
+      top: `${Math.min(currentY, this.startY)}px`,
+      width: `${Math.abs(currentX - this.startX)}px`,
+      height: `${Math.abs(currentY - this.startY)}px`,
+      display: 'block'
+    };
+  }
+
+  @HostListener('mouseup')
+  onGlobalMouseUp(): void {
+    clearTimeout(this.mousedownTimeout);
+    this.isMouseDown = false;
+    this.selectBoxStyle.display = 'none';
+    this.calculateTableOffset();
+  }
+
   ngOnInit(): void {
     this.dt3rdOptions = {
       pagingType: 'full_numbers',
@@ -34,7 +86,11 @@ export class AngularSelectComponent implements OnInit {
     }
   }
 
-    onMouseDown(index: number): void {
+    onMouseDown(index: number, event: MouseEvent): void {
+      if ((event.target as HTMLElement).classList.contains('mat-icon')) {
+        return;
+      }
+
       console.log('onMouseDown');
       console.assert(index >= 0 && index < this.mockData.length, 'index out of range');
       this.isMouseDown = true;
@@ -81,5 +137,17 @@ export class AngularSelectComponent implements OnInit {
         this.selectedRows.delete(selectedRow);
       }
       this.mockData.splice(questionIndex, 1);
+
+      this.calculateTableOffset();
+    }
+
+    ngAfterViewInit(): void {
+      this.calculateTableOffset();
+    }
+
+    calculateTableOffset(): void {
+      const tableElement = this.datatableElement.nativeElement.querySelector('table');
+      const tableRect = tableElement.getBoundingClientRect();
+      this.tableOffset = { x: tableRect.left, y: tableRect.top };
     }
 }

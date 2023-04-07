@@ -1,7 +1,8 @@
 <h1>Angular ONLY - No JQuery - No Change Needed to Existing Install</h1>
 <h3>Row Selections:</h3>
 <textarea readonly>{{selectedRowsText}}</textarea>
- <table id="angularSelectTable" class="table table-container" datatable [dtOptions]="dt3rdOptions">
+    <div id="select-box" [ngClass]="{'select-box': !isMouseDown}" [ngStyle]="selectBoxStyle"></div>"
+    <table #myDataTable id="angularSelectTable" class="table table-container" datatable [dtOptions]="dt3rdOptions">
     <thead>
         <tr>
             <th>Delete?</th>
@@ -13,11 +14,11 @@
     </thead>
     <tbody>
         <tr *ngFor="let person of mockData; let i = index" 
-        (mousedown)="onMouseDown(i); $event.stopPropagation()"
-        (mousemove)="onMouseMove(i); $event.stopPropagation()"
-        (mouseup)="onMouseUp(i); $event.stopPropagation()" 
+        (mousedown)="onMouseDown(i, $event);"
+        (mousemove)="onMouseMove(i);"
+        (mouseup)="onMouseUp(i);" 
         [ngClass]="{'selectable': person.isSelectable, 'selected': isSelected(i)}">
-            <td><mat-icon (click)="deleteQuestion(i, $event)">delete</mat-icon></td>
+            <td><mat-icon (click)="deleteQuestion(i, $event); $event.stopPropagation()">delete</mat-icon></td>
             <td>{{person.name}}</td>
             <td>{{person.age}}</td>
             <td>{{person.job}}</td>

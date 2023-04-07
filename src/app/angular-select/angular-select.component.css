@@ -12,3 +12,15 @@ textarea {
     resize: none;
     overflow: auto;
 }
+
+#select-box {
+    border: 2px dashed #000;
+    background-color: rgba(0, 0, 255, 0.2);
+    position: absolute;
+    z-index: 1000;
+}
+
+.select-box-hidden {
+    display: none;
+}
+
