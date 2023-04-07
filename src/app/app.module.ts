@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { MyTableComponentComponent } from './my-table-component/my-table-component.component';
 import { MySelectExtensionComponent } from './my-select-extension/my-select-extension.component';
 import { AngularSelectComponent } from './angular-select/angular-select.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { AngularSelectComponent } from './angular-select/angular-select.componen
   imports: [
     BrowserModule,
     DataTablesModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

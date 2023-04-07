@@ -4,6 +4,7 @@
  <table id="angularSelectTable" class="table table-container" datatable [dtOptions]="dt3rdOptions">
     <thead>
         <tr>
+            <th>Delete?</th>
             <th>Name</th>
             <th>Age</th>
             <th>Job</th>
@@ -16,6 +17,7 @@
         (mousemove)="onMouseMove(i); $event.stopPropagation()"
         (mouseup)="onMouseUp(i); $event.stopPropagation()" 
         [ngClass]="{'selectable': person.isSelectable, 'selected': isSelected(i)}">
+            <td><mat-icon (click)="deleteQuestion(i, $event)">delete</mat-icon></td>
             <td>{{person.name}}</td>
             <td>{{person.age}}</td>
             <td>{{person.job}}</td>

@@ -72,4 +72,14 @@ export class AngularSelectComponent implements OnInit {
     isSelected(index: number): boolean {
       return this.selectedRows.has(this.mockData[index]);
     }
+
+    deleteQuestion(questionIndex: number, event: MouseEvent): void {
+      event.stopPropagation();
+      this.mockData[questionIndex].softDelete = true;
+      let selectedRow: IMockData = this.mockData[questionIndex];
+      if (this.selectedRows.has(selectedRow)) {
+        this.selectedRows.delete(selectedRow);
+      }
+      this.mockData.splice(questionIndex, 1);
+    }
 }

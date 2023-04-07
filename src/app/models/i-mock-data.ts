@@ -4,4 +4,5 @@ export interface IMockData {
     job: string;
     employed: boolean;
     isSelectable: boolean;
+    softDelete: boolean;
 }
