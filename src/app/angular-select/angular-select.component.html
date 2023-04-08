@@ -2,7 +2,7 @@
 <h3>Row Selections:</h3>
 <textarea readonly>{{selectedRowsText}}</textarea>
     <div id="select-box" [ngClass]="{'select-box': !isMouseDown}" [ngStyle]="selectBoxStyle"></div>"
-    <table #myDataTable id="angularSelectTable" class="table table-container" datatable [dtOptions]="dt3rdOptions">
+    <table #myDataTable class="table table-container" datatable [dtOptions]="dt3rdOptions">
     <thead>
         <tr>
             <th>Delete?</th>
